@@ -1,24 +1,21 @@
 "" Initialization
 set nocp
+cal pathogen#infect() 
 
 "" Clipboard
 set clipboard=unnamed
-
-"" CtrlP Settings
-let g:ctrlp_extensions = ["tag"]
-let g:ctrlp_max_height = 15
-cal pathogen#infect()          " Load Pathogen
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.bin$\|\.bundle$',
-  \ 'file': '\.exe$\|\.so$\|\.dll$\|\.git\|\.DS_Store$\|\.rspec$'
-  \ }
 
 set backupdir=~/.vim/_backup    " where to put backup files.
 set directory=~/.vim/_temp      " where to put swap files.
 
 let mapleader=","
 
-color mustang
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COLOR
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+:set t_Co=256 " 256 colors
+:set background=dark
+:color grb256
 
 syntax enable
 set encoding=utf-8
@@ -89,130 +86,113 @@ set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 nnoremap <cr><cr> :nohlsearch<cr>  " clear search on return
 
-function! ShowRoutes()
-  " Requires 'scratch' plugin
-  :topleft 100 :split __Routes__
-  " Make sure Vim doesn't write __Routes__ as a file
-  :set buftype=nofile
-  " Delete everything
-  :normal 1GdG
-  " Put routes output in buffer
-  :0r! rake -s routes
-  " Size window to number of lines (1 plus rake output length)
-  :exec ":normal " . line("$") . _ "
-  " Move cursor to bottom
-  :normal 1GG
-  " Delete empty trailing line
-  :normal dd
-endfunction
-map <leader>gR :call ShowRoutes()<cr>
+"" Open files in the dir of the current file
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>e :edit %%
+map <leader>v :view %%
 
-"" CtrlP Key Bindings
-map <leader>gv :CtrlP app/views<cr>
-map <leader>gc :CtrlP app/controllers<cr>
-map <leader>gm :CtrlP app/models<cr>
-map <leader>gh :CtrlP app/helpers<cr>
-map <leader>gl :CtrlP lib<cr>
-map <leader>ga :CtrlP app/assets<cr>
-map <leader>gj :CtrlP app/assets/javascripts<cr>
-map <leader>gs :CtrlP app/assets/stylesheets<cr>
-map <leader>gf :CtrlP features<cr>
-map <leader>gg :topleft 100 :split Gemfile<cr>
-map <leader>gt :CtrlPTag<cr>
-map <leader>f :CtrlP<cr>
-map <leader>F :CtrlP %%<cr>
+"" Inlining variables
+function! InlineVariable()
+    " Copy the variable under the cursor into the 'a' register
+    :let l:tmp_a = @a
+    :normal "ayiw
+    " Delete variable and equals sign
+    :normal 2daW
+    " Delete the expression into the 'b' register
+    :let l:tmp_b = @b
+    :normal "bd$
+    " Delete the remnants of the line
+    :normal dd
+    " Go to the end of the previous line so we can start our search for the
+    " usage of the variable to replace. Doing '0' instead of 'k$' doesn't
+    " work; I'm not sure why.
+    normal k$
+    " Find the next occurence of the variable
+    exec '/\<' . @a . '\>'
+    " Replace that occurence with the text we yanked
+    exec ':.s/\<' . @a . '\>/' . @b
+    :let @a = l:tmp_a
+    :let @b = l:tmp_b
+endfunction
+nnoremap <leader>ri :call InlineVariable()<cr>
+
+let g:CommandTMaxHeight=15
+let g:CommandTMaxFiles=20000
+set ttimeoutlen=50
+
+if &term =~ "xterm" || &term =~ "screen"
+  let g:CommandTCancelMap     = ['<ESC>', '<C-c>']
+  let g:CommandTSelectNextMap = ['<C-n>', '<C-j>', '<ESC>OB']
+  let g:CommandTSelectPrevMap = ['<C-p>', '<C-k>', '<ESC>OA']
+endif
 
 "" Status- and Powerline
 if has("statusline") && !&cp
   set laststatus=2  " always show the status bar
+  set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 endif
-
-let g:Powerline_cache_file=expand("~/.vim/_temp/Powerline.cache")
-let g:Powerline_symbols = "fancy"
-
-"" TagBar
-let g:tagbar_type_coffee = {
-  \ 'kinds' : [
-  \   'f:functions',
-  \   'o:object'
-  \ ],
-  \ 'kind2scope' : {
-  \  'f' : 'object',
-  \   'o' : 'object'
-  \},
-  \ 'sro' : ".",
-  \ 'ctagsbin' : 'coffeetags',
-  \ 'ctagsargs' : '--include-vars ',
-  \}
-
-"" NERDTree
-map <silent><leader>n :NERDTreeToggle<CR>
-
-let NERDTreeDirArrows = 0
-let NERDTreeMinimalUI = 1
-let NERDTreeIgnore=['\.pyc$', '\.pyo$', '\.rbc$', '\.rbo$', '\.class$', '\.o', '\~$']
-let NERDTreeHijackNetrw = 0
-
-augroup AuNERDTreeCmd
-autocmd AuNERDTreeCmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
-autocmd AuNERDTreeCmd FocusGained * call s:UpdateNERDTree()
-
-" If the parameter is a directory, cd into it
-function s:CdIfDirectory(directory)
-  let explicitDirectory = isdirectory(a:directory)
-  let directory = explicitDirectory || empty(a:directory)
-
-  if explicitDirectory
-    exe "cd " . fnameescape(a:directory)
-  endif
-
-  " Allows reading from stdin
-  " ex: git diff | mvim -R -
-  if strlen(a:directory) == 0
-    return
-  endif
-
-  if directory
-    NERDTree
-    wincmd p
-    bd
-  endif
-
-  if explicitDirectory
-    wincmd p
-  endif
-endfunction
-
-" NERDTree utility function
-function s:UpdateNERDTree(...)
-  let stay = 0
-
-  if(exists("a:1"))
-    let stay = a:1
-  end
-
-  if exists("t:NERDTreeBufName")
-    let nr = bufwinnr(t:NERDTreeBufName)
-    if nr != -1
-      exe nr . "wincmd w"
-      exe substitute(mapcheck("R"), "<CR>", "", "")
-      if !stay
-        wincmd p
-      end
-    endif
-  endif
-endfunction
 
 "" Moving around
 map <silent><leader>tn :tabnext<CR>
 map <silent><leader>tp :tabprev<CR>
-
-"" Paste and NoPaste
-map <silent><leader>ps :set paste<CR>
-map <silent><leader>nps :set nopaste<CR>
 
 " Indent p tags
 autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_indent_tags .= '\|p\|li\|dt\|dd' | endif
 
 ""ZoomWin
 map <silent><leader>z :ZoomWin<CR>
+
+"" Syntax Highlighting
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-s> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ARROW KEYS ARE UNACCEPTABLE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <Left> :echo "no!"<cr>
+map <Right> :echo "no!"<cr>
+map <Up> :echo "no!"<cr>
+map <Down> :echo "no!"<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OPEN FILES IN DIRECTORY OF CURRENT FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>e :edit %%
+map <leader>v :view %%
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
