@@ -15,7 +15,7 @@ let mapleader=","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ":set t_Co=256 " 256 colors
 syntax enable
-:set background=dark
+:set background=light
 :let g:solarized_termcolors=256
 :colorscheme solarized
 
