@@ -13,11 +13,20 @@ let mapleader=","
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COLOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-":set t_Co=256 " 256 colors
-syntax enable
-:set background=light
-:let g:solarized_termcolors=256
-:colorscheme solarized
+if has('unix')
+  set t_Co=256
+  set background=dark
+  if !has('gui_running')
+      let g:solarized_termcolors=&t_Co
+      let g:solarized_termtrans=1
+      colorscheme solarized
+  endif
+elseif has('mac')
+  syntax enable
+  :set background=light
+  :let g:solarized_termcolors=256
+  :colorscheme solarized
+endif
 
 set encoding=utf-8
 set showcmd                     " display incomplete commands
