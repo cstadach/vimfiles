@@ -1,6 +1,7 @@
 "" Initialization
 set nocp
 cal pathogen#infect() 
+cal pathogen#helptags()
 
 "" Clipboard
 set clipboard=unnamed
