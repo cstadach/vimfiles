@@ -1,105 +1,140 @@
 [submodule "bundle/fugitive"]
+  ignore = untracked
 	path = bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
 [submodule "bundle/mustang"]
+  ignore = untracked
 	path = bundle/mustang
 	url = git://github.com/croaker/mustang-vim.git
 [submodule "bundle/coffescript"]
+  ignore = untracked
 	path = bundle/coffescript
 	url = git://github.com/kchmck/vim-coffee-script.git
 [submodule "bundle/commentary"]
+  ignore = untracked
 	path = bundle/commentary
 	url = git://github.com/tpope/vim-commentary.git
 [submodule "bundle/endwise"]
+  ignore = untracked
 	path = bundle/endwise
 	url = git://github.com/tpope/vim-endwise.git
 [submodule "bundle/haml"]
+  ignore = untracked
 	path = bundle/haml
 	url = git://github.com/tpope/vim-haml.git
 [submodule "bundle/javascript"]
+  ignore = untracked
 	path = bundle/javascript
 	url = git://github.com/pangloss/vim-javascript.git
 [submodule "bundle/rails"]
+  ignore = untracked
 	path = bundle/rails
 	url = git://github.com/tpope/vim-rails.git
 [submodule "bundle/scss"]
+  ignore = untracked
 	path = bundle/scss
 	url = git://github.com/cakebaker/scss-syntax.vim.git
 [submodule "bundle/ack"]
+  ignore = untracked
 	path = bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
 [submodule "bundle/supertab"]
+  ignore = untracked
 	path = bundle/supertab
 	url = git://github.com/ervandew/supertab.git
 [submodule "bundle/markdown"]
+  ignore = untracked
 	path = bundle/markdown
 	url = git://github.com/tpope/vim-markdown.git
 [submodule "bundle/easymotion"]
+  ignore = untracked
 	path = bundle/easymotion
 	url = git://github.com/Lokaltog/vim-easymotion.git
 [submodule "bundle/surround"]
+  ignore = untracked
 	path = bundle/surround
 	url = git://github.com/tpope/vim-surround.git
 [submodule "bundle/unimpaired"]
+  ignore = untracked
 	path = bundle/unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
 [submodule "bundle/align"]
+  ignore = untracked
 	path = bundle/align
 	url = git://github.com/tsaleh/vim-align.git
 [submodule "bundle/css-colors"]
+  ignore = untracked
 	path = bundle/css-colors
 	url = git://github.com/ap/vim-css-color.git
 [submodule "bundle/cucumber"]
+  ignore = untracked
 	path = bundle/cucumber
 	url = git://github.com/tpope/vim-cucumber.git
 [submodule "bundle/nodejs"]
+  ignore = untracked
 	path = bundle/nodejs
 	url = git://github.com/mmalecki/vim-node.js.git
 [submodule "bundle/puppet"]
+  ignore = untracked
 	path = bundle/puppet
 	url = git://github.com/ajf/puppet-vim.git
 [submodule "bundle/rspec"]
+  ignore = untracked
 	path = bundle/rspec
 	url = git://github.com/skwp/vim-rspec.git
 [submodule "bundle/css3"]
+  ignore = untracked
 	path = bundle/css3
 	url = git://github.com/hail2u/vim-css3-syntax.git
 [submodule "bundle/less"]
+  ignore = untracked
 	path = bundle/less
 	url = git://github.com/groenewege/vim-less.git
 [submodule "bundle/ruby"]
+  ignore = untracked
 	path = bundle/ruby
 	url = git://github.com/vim-ruby/vim-ruby.git
 [submodule "bundle/vimux"]
+  ignore = untracked
 	path = bundle/vimux
 	url = git://github.com/benmills/vimux.git
 [submodule "bundle/vitality"]
+  ignore = untracked
 	path = bundle/vitality
 	url = git://github.com/sjl/vitality.vim.git
 [submodule "bundle/clam"]
+  ignore = untracked
 	path = bundle/clam
 	url = git://github.com/sjl/clam.vim.git
 [submodule "bundle/badwolf-colors"]
+  ignore = untracked
 	path = bundle/badwolf-colors
 	url = git://github.com/sjl/badwolf.git
 [submodule "bundle/solarized"]
+  ignore = untracked
 	path = bundle/solarized
 	url = git://github.com/altercation/vim-colors-solarized.git
 [submodule "bundle/railscasts-sexy"]
+  ignore = untracked
 	path = bundle/railscasts-sexy
 	url = git://github.com/oguzbilgic/sexy-railscasts-theme.git
 [submodule "bundle/command-t"]
+  ignore = untracked
 	path = bundle/command-t
 	url = git://github.com/wincent/Command-T.git
 [submodule "bundle/zoomwin"]
+  ignore = untracked
 	path = bundle/zoomwin
 	url = git://github.com/vim-scripts/ZoomWin.git
 [submodule "bundle/ctrlp"]
+  ignore = untracked
 	path = bundle/ctrlp
 	url = git://github.com/kien/ctrlp.vim.git
 [submodule "bundle/vim-bundler"]
+  ignore = untracked
 	path = bundle/vim-bundler
 	url = git://github.com/tpope/vim-bundler.git
 [submodule "bundle/gitgutter"]
+  ignore = untracked
 	path = bundle/gitgutter
 	url = git://github.com/airblade/vim-gitgutter.git
