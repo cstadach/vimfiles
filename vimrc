@@ -3,6 +3,8 @@ set nocp
 cal pathogen#infect() 
 cal pathogen#helptags()
 
+set nobackup
+set noswapfile
 "" Clipboard
 set clipboard=unnamed
 
@@ -33,6 +35,9 @@ set encoding=utf-8
 set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
 set number
+
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
 
 "" HTML Indentation
 " This must be loaded manually since vim doesn't seem to
@@ -193,10 +198,10 @@ inoremap <s-tab> <c-n>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ARROW KEYS ARE UNACCEPTABLE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Left> :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up> :echo "no!"<cr>
-map <Down> :echo "no!"<cr>
+" map <Left> :echo "no!"<cr>
+" map <Right> :echo "no!"<cr>
+" map <Up> :echo "no!"<cr>
+" map <Down> :echo "no!"<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OPEN FILES IN DIRECTORY OF CURRENT FILE
