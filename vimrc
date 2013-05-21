@@ -163,6 +163,9 @@ autocmd FileType html,eruby if g:html_indent_tags !~ '\\|p\>' | let g:html_inden
 ""ZoomWin
 map <silent><leader>z :ZoomWin<CR>
 
+"" Mapping for Preview
+nmap <Leader>p :Preview<CR>
+
 "" Syntax Highlighting
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-s> :call <SID>SynStack()<CR>
